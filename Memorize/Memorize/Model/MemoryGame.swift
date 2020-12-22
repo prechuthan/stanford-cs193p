@@ -8,9 +8,9 @@
 import Foundation
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
-    var cards: Array<Card>
+    private(set) var cards: Array<Card>
     
-    var indexOfOneAndOnlyOneFaceUpCard: Int? {
+    private var indexOfOneAndOnlyOneFaceUpCard: Int? {
         get {
             var faceUpCardIndices = [Int]()
             
