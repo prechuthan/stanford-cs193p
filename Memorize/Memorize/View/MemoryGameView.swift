@@ -11,14 +11,23 @@ struct MemoryGameView: View {
     @ObservedObject var emojiMemoryGame: MemoryGameViewModel
     
     var body: some View {
-        Grid(emojiMemoryGame.cards) { card in
-            CardView(card: card).onTapGesture {
-                emojiMemoryGame.choose(card: card)
+        VStack {
+            Grid(emojiMemoryGame.cards) { card in
+                CardView(card: card).onTapGesture {
+                    withAnimation(.linear(duration: 0.25)) {
+                        emojiMemoryGame.choose(card: card)
+                    }
+                }
+                .padding(5)
             }
-            .padding(5)
+                .padding()
+                .foregroundColor(Color.orange)
+            Button(action: {
+                withAnimation(.easeInOut) {
+                    self.emojiMemoryGame.resetGame()
+                }
+            }, label: { Text("New Game") })
         }
-            .padding()
-            .foregroundColor(Color.orange)
     }
 }
 
@@ -35,10 +44,11 @@ struct CardView: View {
                         .opacity(0.4)
                     Text(card.content)
                         .font(Font.system(size: fontSize(for: geometry.size)))
+                        .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                        .animation(card.isMatched ? Animation.linear(duration: 1).repeatForever(autoreverses: false) : .default)
                 }
                 .cardify(isFaceUp: card.isFaceUp)
-                    
-                   
+                .rotation3DEffect(Angle.degrees(card.isFaceUp ? 0 : 180), axis: (0, 1, 0))
             }
         }
     }

@@ -26,5 +26,9 @@ class MemoryGameViewModel: ObservableObject {
         game.choose(card: card)
     }
     
+    func resetGame() {
+        game = MemoryGameViewModel.createGame()
+    }
+    
     
 }
