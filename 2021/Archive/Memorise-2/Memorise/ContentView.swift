@@ -14,7 +14,7 @@ struct ContentView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                 ForEach(game.cards) { card in
-                    CardView(card: card)
+                    CardView(card: car
                         .aspectRatio(2/3, contentMode: .fit)
                         .onTapGesture {
                             game.choose(card)
