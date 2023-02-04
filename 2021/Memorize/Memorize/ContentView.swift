@@ -62,21 +62,30 @@ struct ContentView: View {
             .padding(.horizontal)
             
         } // end of VStack
-        
-        
     }
 }
 
 struct CardView: View {
     var content: String = ""
+    @State var isFaceUp = true
+    
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25.0).fill(.white)
-            RoundedRectangle(cornerRadius: 25.0).strokeBorder(lineWidth: 5)
-            Text(content)
-                .font(.largeTitle)
+            if (isFaceUp) {
+                RoundedRectangle(cornerRadius: 25.0).fill(.white)
+                RoundedRectangle(cornerRadius: 25.0).strokeBorder(lineWidth: 5)
+                Text(content)
+                    .font(.largeTitle)
+            } else {
+                RoundedRectangle(cornerRadius: 25.0).fill(.purple)
+            }
+            
         }
         .foregroundColor(.purple)
+        .onTapGesture {
+            isFaceUp = !isFaceUp
+        }
+        
     }
 }
 
