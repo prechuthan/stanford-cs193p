@@ -46,7 +46,7 @@ struct ContentView: View {
     
     var add: some View {
         Button(action: {
-            if emojiCount < emojiCount {
+            if emojiCount < emojis.count {
                 emojiCount += 1
             }
         }, label: {
