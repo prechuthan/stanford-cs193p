@@ -36,6 +36,8 @@ struct EmojiMemoryGameView: View {
                     if card.isFaceUp {
                         shape.fill(.white)
                         shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
+                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: 110 - 90))
+                            .padding(DrawingConstants.timerCirclePadding).opacity(DrawingConstants.timerCircleOpacity)
                         Text(card.content).font(font(in: geomerty.size))
                     } else if card.isMatched {
                         shape.opacity(0)
@@ -53,14 +55,17 @@ struct EmojiMemoryGameView: View {
         private struct DrawingConstants {
             static let cornerRadius: CGFloat = 10
             static let lineWidth: CGFloat = 3
-            static let fontScale: CGFloat = 0.75
+            static let fontScale: CGFloat = 0.6
+            static let timerCirclePadding: CGFloat = 5
+            static let timerCircleOpacity: CGFloat = 0.5
         }
     }
     
     struct EmojiMemoryGameView_Previews: PreviewProvider {
         static var previews: some View {
             let game = EmojiMemoryGame()
-            EmojiMemoryGameView(game: game)
+            game.choose(game.cards.first!)
+            return EmojiMemoryGameView(game: game)
         }
     }
 }
