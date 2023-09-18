@@ -13,6 +13,7 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         VStack {
             gameBody
+            deckBody
             shuffle
         }
         .padding(.horizontal)
@@ -35,7 +36,7 @@ struct EmojiMemoryGameView: View {
             } else {
                 CardView(card: card)
                     .padding(4)
-                    .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity).animation(.easeInOut(duration: 1)))
+                    .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity))
                     .onTapGesture {
                         withAnimation {
                             game.choose(card)
@@ -43,21 +44,24 @@ struct EmojiMemoryGameView: View {
                     }
             }
         }
-        .onAppear {
-            // "deal" cards
-            withAnimation {
-                for card in game.cards {
-                    deal(card)
-                }
-            }
-        }
-        .foregroundColor(/*@START_MENU_TOKEN@*/.red/*@END_MENU_TOKEN@*/)
+        .foregroundColor(CardConstants.color)
     }
     
     var deckBody: some View {
         ZStack {
             ForEach(game.cards.filter(isUndealt)) { card in
                 CardView(card: card)
+                    .transition(AnyTransition.asymmetric(insertion: .opacity, removal: .scale))
+            }
+        }
+        .frame(width: CardConstants.undealtWidth, height: CardConstants.undealtHeight)
+        .foregroundColor(CardConstants.color)
+        .onTapGesture {
+            // "deal" cards
+            withAnimation {
+                for card in game.cards {
+                    deal(card)
+                }
             }
         }
     }
@@ -103,8 +107,16 @@ struct EmojiMemoryGameView: View {
     struct EmojiMemoryGameView_Previews: PreviewProvider {
         static var previews: some View {
             let game = EmojiMemoryGame()
-            game.choose(game.cards.first!)
             return EmojiMemoryGameView(game: game)
         }
+    }
+    
+    private struct CardConstants {
+        static let color = Color.red
+        static let aspectRatio: CGFloat = 2/3
+        static let dealDuration: Double = 0.5
+        static let totalDealDuration: Double = 2
+        static let undealtHeight: CGFloat = 90
+        static let undealtWidth = undealtHeight * aspectRatio
     }
 }
