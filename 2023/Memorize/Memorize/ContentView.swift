@@ -12,9 +12,12 @@ struct ContentView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(lineWidth: 3)
-                .padding(.horizontal)
-                .foregroundColor(.red)
+            
+            Text("Hello")
+                .foregroundColor(.orange)
         }
+        .padding(.horizontal)
+        .foregroundColor(.red)
     }
 }
 
